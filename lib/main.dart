@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:hybridorpho_admin/homescreen.dart';
+import 'package:hybridorpho_admin/residents.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -23,7 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Homescreen());
+    return MaterialApp(home: Residents());
   }
 }
 

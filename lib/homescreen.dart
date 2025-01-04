@@ -32,7 +32,7 @@ class Homescreen extends StatelessWidget {
                   Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
+                        builder: (context) => const Homescreen(),
                       ));
                 },
                 style: ElevatedButton.styleFrom(
@@ -392,11 +392,11 @@ class Homescreen extends StatelessWidget {
                     color: Colors.pink,
                   ),
                   child: Container(
-                    padding: EdgeInsets.all(20),
+                    padding:const EdgeInsets.all(20),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                       const Text(
                           "Todays activity",
                           style: TextStyle(fontSize: 24),
                         ),
@@ -425,9 +425,9 @@ class Homescreen extends StatelessWidget {
                                 decoration: BoxDecoration(
                                     color: Colors.grey.withOpacity(0.7),
                                     borderRadius: BorderRadius.circular(10)),
-                                padding: EdgeInsets.symmetric(
+                                padding:const EdgeInsets.symmetric(
                                     horizontal: 15, vertical: 5),
-                                child: Text(
+                                child:const Text(
                                   "8 participants",
                                 ),
                               )
