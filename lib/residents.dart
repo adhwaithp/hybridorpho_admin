@@ -1,9 +1,5 @@
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:hybridorpho_admin/homescreen.dart';
-import 'package:hybridorpho_admin/main.dart';
-import 'package:hybridorpho_admin/staff.dart';
 
 class Residents extends StatefulWidget {
   const Residents({super.key});
@@ -15,158 +11,25 @@ class Residents extends StatefulWidget {
 class _ResidentsState extends State<Residents> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(),
-      drawer: Drawer(
-          backgroundColor: Colors.blue,
-          child: ListView(
+    return Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              Padding(
-                padding: EdgeInsets.all(20),
-                child: Text(
-                  "hybridorpho",
-                  style: TextStyle(fontSize: 24, fontWeight: FontWeight.w500),
-                ),
-              ),
-              ElevatedButton(
-                child: const ListTile(
-                  leading: const Icon(Icons.home),
-                  title: Text("Home"),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Homescreen(),
-                      ));
-                },
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(width: 0, color: Colors.blue),
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                  backgroundColor: Colors.blue,
-                ),
-              ),
-              ElevatedButton(
-                child: const ListTile(
-                  leading: const Icon(Icons.people),
-                  title: Text("residents"),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Residents(),
-                      ));
-                },
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(width: 0, color: Colors.blue),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                  backgroundColor: Colors.blue,
-                ),
-              ),
-              ElevatedButton(
-                child: const ListTile(
-                  leading: const Icon(Icons.people),
-                  title: Text("staff"),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const Staff(),
-                      ));
-                },
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(width: 0, color: Colors.blue),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                  backgroundColor: Colors.blue,
-                ),
-              ),
-              ElevatedButton(
-                child: const ListTile(
-                  leading: const Icon(Icons.schedule),
-                  title: Text("schedule"),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ));
-                },
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(width: 0, color: Colors.blue),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                  backgroundColor: Colors.blue,
-                ),
-              ),
-              ElevatedButton(
-                child: const ListTile(
-                  leading: const Icon(Icons.local_activity),
-                  title: Text("activity"),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ));
-                },
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(width: 0, color: Colors.blue),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                  backgroundColor: Colors.blue,
-                ),
-              ),
-              ElevatedButton(
-                child: const ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: Text("settings"),
-                ),
-                onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ));
-                },
-                style: ElevatedButton.styleFrom(
-                  side: BorderSide(width: 0, color: Colors.blue),
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(0)),
-                  backgroundColor: Colors.blue,
-                ),
-              ),
-            ],
-          )),
-      body: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                const Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Text(
-                        "Residents",
-                        style: TextStyle(
-                            fontSize: 30, fontWeight: FontWeight.w900),
-                      ),
-                      Text("Manage resident information")
-                    ]),
-                ElevatedButton(
+              const Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      "Residents",
+                      style:
+                          TextStyle(fontSize: 30, fontWeight: FontWeight.w900),
+                    ),
+                    Text("Manage resident information")
+                  ]),
+              SizedBox(
+                child: ElevatedButton(
                   onPressed: () {
                     showDialog(
                         context: context,
@@ -364,150 +227,149 @@ class _ResidentsState extends State<Residents> {
                       TextSpan(text: "add Residents")
                     ]),
                   ),
+                ),
+              )
+            ],
+          ),
+        ),
+        Expanded(
+          child: Container(
+            decoration: BoxDecoration(border: Border.all(color: Colors.black)),
+            margin: const EdgeInsets.all(20),
+            padding: const EdgeInsets.all(20),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    const SizedBox(
+                      width: 1000,
+                      child: TextField(
+                        decoration: InputDecoration(
+                            prefixIcon: Icon(Icons.search),
+                            border: OutlineInputBorder()),
+                      ),
+                    ),
+                    DropdownButton(
+                      value: 'all',
+                      items: [
+                        DropdownMenuItem(
+                          value: 'all',
+                          child: const Text("All gender"),
+                        ),
+                        const DropdownMenuItem(
+                          value: 'male',
+                          child: Text("Male"),
+                        ),
+                        DropdownMenuItem(
+                          value: 'female',
+                          child: Text("Female"),
+                        ),
+                      ],
+                      onChanged: (val) {},
+                    ),
+                  ],
+                ),
+                Expanded(
+                  child: DataTable(
+                      dataRowMinHeight: 50,
+                      dataRowMaxHeight: 60,
+                      columns: [
+                        DataColumn(label: Text("Name")),
+                        DataColumn(label: Text("Age")),
+                        DataColumn(label: Text("Blood Group")),
+                        DataColumn(label: Text("medical condition")),
+                        DataColumn(label: Text("Action")),
+                      ],
+                      rows: [
+                        DataRow(cells: [
+                          DataCell(
+                            Column(
+                              children: [
+                                Text("Ramesh",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600)),
+                                Text("ID:1001",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w100))
+                              ],
+                            ),
+                          ),
+                          DataCell(Text("20")),
+                          DataCell(Text("o+")),
+                          DataCell(Text("heart disease")),
+                          DataCell(Icon(Icons.edit)),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(
+                            Column(
+                              children: [
+                                Text("Ramesh",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600)),
+                                Text("ID:1001",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w100))
+                              ],
+                            ),
+                          ),
+                          DataCell(Text("20")),
+                          DataCell(Text("o+")),
+                          DataCell(Text("heart disease")),
+                          DataCell(Icon(Icons.edit)),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(
+                            Column(
+                              children: [
+                                Text("Ramesh",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600)),
+                                Text("ID:1001",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w100))
+                              ],
+                            ),
+                          ),
+                          DataCell(Text("20")),
+                          DataCell(Text("o+")),
+                          DataCell(Text("heart disease")),
+                          DataCell(Icon(Icons.edit)),
+                        ]),
+                        DataRow(cells: [
+                          DataCell(
+                            Column(
+                              children: [
+                                Text("Ramesh",
+                                    style: TextStyle(
+                                        fontSize: 24,
+                                        fontWeight: FontWeight.w600)),
+                                Text("ID:1001",
+                                    style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.w100))
+                              ],
+                            ),
+                          ),
+                          DataCell(Text("20")),
+                          DataCell(Text("o+")),
+                          DataCell(Text("heart disease")),
+                          DataCell(Icon(Icons.edit)),
+                        ])
+                      ]),
                 )
               ],
             ),
           ),
-          Expanded(
-            child: Container(
-              decoration:
-                  BoxDecoration(border: Border.all(color: Colors.black)),
-              margin: const EdgeInsets.all(20),
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const SizedBox(
-                        width: 1000,
-                        child: TextField(
-                          decoration: InputDecoration(
-                              prefixIcon: Icon(Icons.search),
-                              border: OutlineInputBorder()),
-                        ),
-                      ),
-                      DropdownButton(
-                        value: 'all',
-                        items: [
-                          DropdownMenuItem(
-                            value: 'all',
-                            child: const Text("All gender"),
-                          ),
-                          const DropdownMenuItem(
-                            value: 'male',
-                            child: Text("Male"),
-                          ),
-                          DropdownMenuItem(
-                            value: 'female',
-                            child: Text("Female"),
-                          ),
-                        ],
-                        onChanged: (val) {},
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: DataTable(
-                        dataRowMinHeight: 50,
-                        dataRowMaxHeight: 60,
-                        columns: [
-                          DataColumn(label: Text("Name")),
-                          DataColumn(label: Text("Age")),
-                          DataColumn(label: Text("Blood Group")),
-                          DataColumn(label: Text("medical condition")),
-                          DataColumn(label: Text("Action")),
-                        ],
-                        rows: [
-                          DataRow(cells: [
-                            DataCell(
-                              Column(
-                                children: [
-                                  Text("Ramesh",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600)),
-                                  Text("ID:1001",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w100))
-                                ],
-                              ),
-                            ),
-                            DataCell(Text("20")),
-                            DataCell(Text("o+")),
-                            DataCell(Text("heart disease")),
-                            DataCell(Icon(Icons.edit)),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(
-                              Column(
-                                children: [
-                                  Text("Ramesh",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600)),
-                                  Text("ID:1001",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w100))
-                                ],
-                              ),
-                            ),
-                            DataCell(Text("20")),
-                            DataCell(Text("o+")),
-                            DataCell(Text("heart disease")),
-                            DataCell(Icon(Icons.edit)),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(
-                              Column(
-                                children: [
-                                  Text("Ramesh",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600)),
-                                  Text("ID:1001",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w100))
-                                ],
-                              ),
-                            ),
-                            DataCell(Text("20")),
-                            DataCell(Text("o+")),
-                            DataCell(Text("heart disease")),
-                            DataCell(Icon(Icons.edit)),
-                          ]),
-                          DataRow(cells: [
-                            DataCell(
-                              Column(
-                                children: [
-                                  Text("Ramesh",
-                                      style: TextStyle(
-                                          fontSize: 24,
-                                          fontWeight: FontWeight.w600)),
-                                  Text("ID:1001",
-                                      style: TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w100))
-                                ],
-                              ),
-                            ),
-                            DataCell(Text("20")),
-                            DataCell(Text("o+")),
-                            DataCell(Text("heart disease")),
-                            DataCell(Icon(Icons.edit)),
-                          ])
-                        ]),
-                  )
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
+        ),
+      ],
     );
   }
 }

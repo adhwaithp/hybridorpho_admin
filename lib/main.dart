@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:hybridorpho_admin/homescreen.dart';
 import 'package:hybridorpho_admin/residents.dart';
+import 'package:hybridorpho_admin/staff.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 
 void main() async {
@@ -12,7 +13,6 @@ void main() async {
   );
 
   runApp(const MyApp());
-
 }
 
 class MyApp extends StatefulWidget {
@@ -24,7 +24,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(home: Residents());
+    return MaterialApp(home: Homescreen());
   }
 }
 
@@ -33,7 +33,6 @@ class LoginScreen extends StatefulWidget {
 
   @override
   State<LoginScreen> createState() => _LoginScreenState();
-
 }
 
 class _LoginScreenState extends State<LoginScreen> {
@@ -41,7 +40,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      
       body: Row(
         children: [
           Expanded(
