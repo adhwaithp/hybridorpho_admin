@@ -1,6 +1,7 @@
 import 'dart:js_interop';
 
 import 'package:flutter/material.dart';
+import 'package:hybridorpho_admin/inventory.dart';
 import 'package:hybridorpho_admin/main.dart';
 import 'package:hybridorpho_admin/residents.dart';
 import 'package:hybridorpho_admin/staff.dart';
@@ -18,7 +19,7 @@ class _HomescreenState extends State<Homescreen>
 
   @override
   void initState() {
-    _tabController = TabController(vsync: this, length: 3);
+    _tabController = TabController(vsync: this, length: 6);
     _tabController.addListener(() {
       setState(() {});
     });
@@ -97,11 +98,7 @@ class _HomescreenState extends State<Homescreen>
                   title: Text("schedule"),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ));
+                  _tabController.animateTo(3);
                 },
                 style: ElevatedButton.styleFrom(
                   side: BorderSide(width: 0, color: Colors.blue),
@@ -118,38 +115,32 @@ class _HomescreenState extends State<Homescreen>
                   title: Text("activity"),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ));
+                  _tabController.animateTo(4);
                 },
                 style: ElevatedButton.styleFrom(
                   side: BorderSide(width: 0, color: Colors.blue),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0)),
-                  backgroundColor: Colors.blue,
+                  backgroundColor:
+                      _tabController.index == 4 ? Colors.red : Colors.blue,
                 ),
               ),
               ElevatedButton(
                 child: const ListTile(
-                  leading: const Icon(Icons.settings),
-                  title: Text("settings"),
+                  leading: const Icon(Icons.inventory),
+                  title: Text("Inventory"),
                 ),
                 onPressed: () {
-                  Navigator.push(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const LoginScreen(),
-                      ));
+                  _tabController.animateTo(5);
                 },
                 style: ElevatedButton.styleFrom(
                   side: BorderSide(width: 0, color: Colors.blue),
                   elevation: 0,
                   shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(0)),
-                  backgroundColor: Colors.blue,
+                  backgroundColor:
+                      _tabController.index == 5 ? Colors.red : Colors.blue,
                 ),
               ),
             ],
@@ -543,6 +534,13 @@ class _HomescreenState extends State<Homescreen>
             ),
             Residents(),
             Staff(),
+            Container(
+              color: Colors.blue,
+            ),
+            Container(
+              color: Colors.red,
+            ),
+            Inventory()
           ],
         ),
       ),
