@@ -1,0 +1,394 @@
+import 'package:flutter/material.dart';
+
+class Volunter extends StatefulWidget {
+  const Volunter({super.key});
+
+  @override
+  State<Volunter> createState() => _VolunterState();
+}
+
+class _VolunterState extends State<Volunter>
+    with SingleTickerProviderStateMixin {
+  late TabController _tabController;
+  @override
+  void initState() {
+    _tabController = TabController(length: 2, vsync: this);
+    _tabController.addListener(() {
+      setState(() {});
+      super.initState();
+    });
+  }
+
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.all(20.0),
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            "Volunteer Management",
+            style: TextStyle(fontSize: 25, fontWeight: FontWeight.w800),
+          ),
+          SizedBox(
+            height: 20,
+          ),
+          Row(
+            children: [
+              SizedBox(
+                  width: 180,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: _tabController.index == 0
+                              ? Colors.blue
+                              : Colors.amber,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7))),
+                      onPressed: () {
+                        _tabController.animateTo(0);
+                      },
+                      child: Row(
+                        children: [
+                          Text("volunteer Details"),
+                          Icon(
+                            Icons.people,
+                            color: _tabController.index == 0
+                                ? Colors.amber
+                                : Colors.blue,
+                          )
+                        ],
+                      ))),
+              SizedBox(
+                width: 20,
+              ),
+              SizedBox(
+                  width: 170,
+                  child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          backgroundColor: _tabController.index == 1
+                              ? Colors.blue
+                              : Colors.amber,
+                          elevation: 0,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(7))),
+                      onPressed: () {
+                        _tabController.animateTo(1);
+                      },
+                      child: Row(
+                        children: [
+                          Text("Staff Details"),
+                          Icon(
+                            Icons.people,
+                            color: _tabController.index == 1
+                                ? Colors.amber
+                                : Colors.blue,
+                          )
+                        ],
+                      ))),
+            ],
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          Expanded(
+            child: TabBarView(
+              controller: _tabController,
+              children: [Tasks(), VolunteerDetail()],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}
+
+class VolunteerDetail extends StatelessWidget {
+  const VolunteerDetail({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Expanded(
+      child: Column(
+        children: [
+          Container(
+            padding: EdgeInsets.all(20),
+            margin: EdgeInsets.all(20),
+            decoration:
+                BoxDecoration(border: Border.all(style: BorderStyle.solid)),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 400,
+                      child: TextField(
+                        decoration: InputDecoration(
+                            border: OutlineInputBorder(),
+                            prefixIcon: Icon(Icons.search)),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                      child: ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                              backgroundColor: Colors.blue,
+                              shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(5))),
+                          onPressed: () {},
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Icon(Icons.add),
+                              Text(
+                                "Add volunteer",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w400),
+                              ),
+                            ],
+                          )),
+                    ),
+                  ],
+                ),
+                Row(
+                  children: [
+                    Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(7),
+                        color: Colors.blue,
+                      ),
+                      width: 400,
+                      margin: const EdgeInsets.all(15),
+                      padding: const EdgeInsets.all(15),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Text(
+                                "Emma Thomas",
+                                style: TextStyle(
+                                    fontSize: 17, fontWeight: FontWeight.w600),
+                              ),
+                              Row(
+                                children: [
+                                  IconButton(
+                                      onPressed: () {}, icon: Icon(Icons.edit)),
+                                  IconButton(
+                                      onPressed: () {},
+                                      icon: Icon(Icons.delete)),
+                                ],
+                              )
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                    Container(
+                      width: 400,
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class Tasks extends StatelessWidget {
+  const Tasks({
+    super.key,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      margin: EdgeInsets.all(10),
+      constraints:
+          BoxConstraints(maxHeight: 800, minHeight: 400, minWidth: 800),
+      color: Color.fromRGBO(242, 243, 245, 1),
+      child: ListView(
+        children: [
+          Padding(
+            padding: const EdgeInsets.all(15.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  "Assign Tasks",
+                  style: TextStyle(fontWeight: FontWeight.w700, fontSize: 18),
+                ),
+                ElevatedButton(
+                    onPressed: () {},
+                    style:
+                        ElevatedButton.styleFrom(backgroundColor: Colors.blue),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+                        Icon(Icons.add),
+                        Text(
+                          "Assign new task",
+                          style: TextStyle(
+                              color: Colors.white,
+                              fontWeight: FontWeight.w400,
+                              fontSize: 18),
+                        ),
+                      ],
+                    ))
+              ],
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    blurRadius: 5,
+                    offset: Offset(2, 2),
+                    color: Color.fromRGBO(95, 95, 95, 0.5))
+              ],
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "morning exercise session",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.red),
+                      child: Text(
+                        "high priority",
+                        style: TextStyle(backgroundColor: Colors.red),
+                      ),
+                    )
+                  ],
+                ),
+                Text(
+                  "lead a gentle exercise session for residents",
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RichText(
+                        text: TextSpan(children: [
+                      WidgetSpan(child: Icon(Icons.date_range)),
+                      TextSpan(text: "2024-03-09")
+                    ])),
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.yellow,
+                      ),
+                      child: RichText(
+                        text: TextSpan(children: [
+                          WidgetSpan(child: Icon(Icons.pending_actions_sharp)),
+                          TextSpan(text: "pending"),
+                        ]),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          ),
+          Container(
+            decoration: BoxDecoration(
+              boxShadow: [
+                BoxShadow(
+                    offset: Offset(2, 2),
+                    color: Color.fromRGBO(95, 95, 95, 0.5))
+              ],
+              color: Colors.white,
+            ),
+            padding: EdgeInsets.all(10),
+            margin: EdgeInsets.all(10),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Text(
+                      "morning exercise session",
+                      style:
+                          TextStyle(fontSize: 15, fontWeight: FontWeight.w700),
+                    ),
+                    Container(
+                      padding: EdgeInsets.all(5),
+                      margin: EdgeInsets.all(5),
+                      decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(5),
+                          color: Colors.red),
+                      child: Text(
+                        "high priority",
+                        style: TextStyle(backgroundColor: Colors.red),
+                      ),
+                    )
+                  ],
+                ),
+                Text(
+                  "lead a gentle exercise session for residents",
+                  style: TextStyle(
+                    color: Colors.grey,
+                  ),
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    RichText(
+                        text: TextSpan(children: [
+                      WidgetSpan(child: Icon(Icons.date_range)),
+                      TextSpan(text: "2024-03-09")
+                    ])),
+                    Container(
+                      margin: EdgeInsets.all(5),
+                      padding: EdgeInsets.symmetric(horizontal: 5, vertical: 2),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        color: Colors.yellow,
+                      ),
+                      child: RichText(
+                        text: TextSpan(children: [
+                          WidgetSpan(child: Icon(Icons.pending_actions_sharp)),
+                          TextSpan(text: "pending"),
+                        ]),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            ),
+          )
+        ],
+      ),
+    );
+  }
+}

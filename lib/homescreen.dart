@@ -5,6 +5,7 @@ import 'package:hybridorpho_admin/inventory.dart';
 import 'package:hybridorpho_admin/main.dart';
 import 'package:hybridorpho_admin/residents.dart';
 import 'package:hybridorpho_admin/staff.dart';
+import 'package:hybridorpho_admin/volunter.dart';
 
 class Homescreen extends StatefulWidget {
   const Homescreen({super.key});
@@ -19,7 +20,7 @@ class _HomescreenState extends State<Homescreen>
 
   @override
   void initState() {
-    _tabController = TabController(vsync: this, length: 6);
+    _tabController = TabController(vsync: this, length: 7);
     _tabController.addListener(() {
       setState(() {});
     });
@@ -141,6 +142,23 @@ class _HomescreenState extends State<Homescreen>
                       borderRadius: BorderRadius.circular(0)),
                   backgroundColor:
                       _tabController.index == 5 ? Colors.red : Colors.blue,
+                ),
+              ),
+              ElevatedButton(
+                child: const ListTile(
+                  leading: const Icon(Icons.people),
+                  title: Text("Volunteer management"),
+                ),
+                onPressed: () {
+                  _tabController.animateTo(6);
+                },
+                style: ElevatedButton.styleFrom(
+                  side: BorderSide(width: 0, color: Colors.blue),
+                  elevation: 0,
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(0)),
+                  backgroundColor:
+                      _tabController.index == 6 ? Colors.red : Colors.blue,
                 ),
               ),
             ],
@@ -540,7 +558,8 @@ class _HomescreenState extends State<Homescreen>
             Container(
               color: Colors.red,
             ),
-            Inventory()
+            Inventory(),
+            Volunter()
           ],
         ),
       ),
