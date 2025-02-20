@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:hybridorpho_admin/homescreen.dart';
+import 'package:hybridorpho_admin/features/home/homescreen.dart';
 import 'package:hybridorpho_admin/residents.dart';
 import 'package:hybridorpho_admin/staff.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';

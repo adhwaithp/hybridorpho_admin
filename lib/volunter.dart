@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+
+import 'common widgets/add_edit.dart';
 
 class Volunter extends StatefulWidget {
   const Volunter({super.key});
@@ -140,7 +143,12 @@ class VolunteerDetail extends StatelessWidget {
                               backgroundColor: Colors.blue,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(5))),
-                          onPressed: () {},
+                          onPressed: () {
+                            showDialog(
+                              context: context,
+                              builder: (context) => AddEditVolunteerDialog(),
+                            );
+                          },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
@@ -158,46 +166,158 @@ class VolunteerDetail extends StatelessWidget {
                 ),
                 Row(
                   children: [
-                    Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(7),
-                        color: Colors.blue,
-                      ),
-                      width: 400,
-                      margin: const EdgeInsets.all(15),
-                      padding: const EdgeInsets.all(15),
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text(
-                                "Emma Thomas",
-                                style: TextStyle(
-                                    fontSize: 17, fontWeight: FontWeight.w600),
-                              ),
-                              Row(
-                                children: [
-                                  IconButton(
-                                      onPressed: () {}, icon: Icon(Icons.edit)),
-                                  IconButton(
-                                      onPressed: () {},
-                                      icon: Icon(Icons.delete)),
-                                ],
-                              )
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                    Container(
-                      width: 400,
+                    VolunteerDetailsCard(
+                        name: "vimla",
+                        age: "44",
+                        email: "rahul@gmail.com",
+                        phone: "5687899",
+                        skills: "driving",
+                        availability: "weekend",
+                        joinDate: "09-03-2004",
+                        onEdit: () {
+                          showDialog(
+                              context: context,
+                              builder: (context) => AddEditVolunteerDialog());
+                        }),
+                    VolunteerDetailsCard(
+                      name: "emma",
+                      age: "28",
+                      email: "rahul@gmail.com",
+                      phone: "5687899",
+                      skills: "driving",
+                      availability: "weekend",
+                      joinDate: "09-03-2004",
+                      onEdit: () {
+                        showDialog(
+                            context: context,
+                            builder: (context) => AddEditVolunteerDialog(
+                                  volunteerDetail: {'name': 'emma'},
+                                ));
+                      },
                     )
                   ],
                 )
               ],
             ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class VolunteerDetailsCard extends StatelessWidget {
+  final String name, age, joinDate, phone, email, availability, skills;
+
+  final Function() onEdit;
+  const VolunteerDetailsCard({
+    super.key,
+    required this.name,
+    required this.onEdit,
+    required this.age,
+    required this.joinDate,
+    required this.phone,
+    required this.email,
+    required this.availability,
+    required this.skills,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      decoration: BoxDecoration(
+        boxShadow: [
+          BoxShadow(
+              offset: Offset(2, 2),
+              color: const Color.fromARGB(255, 233, 232, 232))
+        ],
+        borderRadius: BorderRadius.circular(7),
+      ),
+      width: 400,
+      margin: const EdgeInsets.all(15),
+      padding: const EdgeInsets.all(15),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    name,
+                    style: TextStyle(
+                      fontSize: 17,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  Text(
+                    joinDate,
+                    style: TextStyle(color: Colors.grey),
+                  ),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("age:" + age, style: TextStyle(color: Colors.grey)),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("phone:" + phone, style: TextStyle(color: Colors.grey)),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("Email:" + email, style: TextStyle(color: Colors.grey)),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text("Availability:" + availability,
+                      style: TextStyle(color: Colors.grey)),
+                  SizedBox(
+                    height: 5,
+                  ),
+                  Text('skills:'),
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(3),
+                        margin: const EdgeInsets.all(5),
+                        child: Text("Elder care"),
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 138, 162, 201),
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(3),
+                        margin: const EdgeInsets.all(5),
+                        child: Text("First Aid"),
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 138, 162, 201),
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                      Container(
+                        padding: const EdgeInsets.all(3),
+                        margin: const EdgeInsets.all(5),
+                        child: Text("Event Planning"),
+                        decoration: BoxDecoration(
+                            color: const Color.fromARGB(255, 138, 162, 201),
+                            borderRadius: BorderRadius.circular(10)),
+                      ),
+                    ],
+                  )
+                ],
+              ),
+              Row(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  IconButton(onPressed: onEdit, icon: Icon(Icons.edit)),
+                  IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+                ],
+              )
+            ],
           ),
         ],
       ),
