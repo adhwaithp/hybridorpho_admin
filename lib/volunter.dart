@@ -3,6 +3,8 @@ import 'package:flutter/services.dart';
 
 import 'common widgets/add_edit.dart';
 
+List<Map<String, String>> volunteers = [];
+
 class Volunter extends StatefulWidget {
   const Volunter({super.key});
 
@@ -13,15 +15,29 @@ class Volunter extends StatefulWidget {
 class _VolunterState extends State<Volunter>
     with SingleTickerProviderStateMixin {
   late TabController _tabController;
+
   @override
   void initState() {
     _tabController = TabController(length: 2, vsync: this);
     _tabController.addListener(() {
       setState(() {});
-      super.initState();
+    });
+    super.initState();
+  }
+
+  void addVolunteer(Map<String, String> volunteer) {
+    setState(() {
+      volunteers.add(volunteer);
     });
   }
 
+  void deleteVolunteer(Map<String, String> volunteer) {
+    setState(() {
+      volunteers.remove(volunteer);
+    });
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(20.0),
@@ -53,37 +69,10 @@ class _VolunterState extends State<Volunter>
                       },
                       child: Row(
                         children: [
-                          Text("volunteer Details"),
+                          Text("Volunteer Details"),
                           Icon(
                             Icons.people,
                             color: _tabController.index == 0
-                                ? Colors.amber
-                                : Colors.blue,
-                          )
-                        ],
-                      ))),
-              SizedBox(
-                width: 20,
-              ),
-              SizedBox(
-                  width: 170,
-                  child: ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                          backgroundColor: _tabController.index == 1
-                              ? Colors.blue
-                              : Colors.amber,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(7))),
-                      onPressed: () {
-                        _tabController.animateTo(1);
-                      },
-                      child: Row(
-                        children: [
-                          Text("Staff Details"),
-                          Icon(
-                            Icons.people,
-                            color: _tabController.index == 1
                                 ? Colors.amber
                                 : Colors.blue,
                           )
@@ -97,7 +86,12 @@ class _VolunterState extends State<Volunter>
           Expanded(
             child: TabBarView(
               controller: _tabController,
-              children: [Tasks(), VolunteerDetail()],
+              children: [
+                VolunteerDetail(
+                    volunteers: volunteers,
+                    addVolunteer: addVolunteer,
+                    deleteVolunteer: deleteVolunteer)
+              ],
             ),
           )
         ],
@@ -107,14 +101,21 @@ class _VolunterState extends State<Volunter>
 }
 
 class VolunteerDetail extends StatelessWidget {
+  final List<Map<String, String>> volunteers;
+  final Function(Map<String, String>) addVolunteer;
+  final Function(Map<String, String>) deleteVolunteer;
+
   const VolunteerDetail({
     super.key,
+    required this.volunteers,
+    required this.addVolunteer,
+    required this.deleteVolunteer,
   });
 
   @override
   Widget build(BuildContext context) {
     return Expanded(
-      child: Column(
+      child: ListView(
         children: [
           Container(
             padding: EdgeInsets.all(20),
@@ -146,7 +147,12 @@ class VolunteerDetail extends StatelessWidget {
                           onPressed: () {
                             showDialog(
                               context: context,
-                              builder: (context) => AddEditVolunteerDialog(),
+                              builder: (context) => AddEditVolunteerDialog(
+                                onSave: (volunteer) {
+                                  addVolunteer(volunteer);
+                                  Navigator.pop(context);
+                                },
+                              ),
                             );
                           },
                           child: Row(
@@ -164,39 +170,29 @@ class VolunteerDetail extends StatelessWidget {
                     ),
                   ],
                 ),
-                Row(
-                  children: [
-                    VolunteerDetailsCard(
-                        name: "vimla",
-                        age: "44",
-                        email: "rahul@gmail.com",
-                        phone: "5687899",
-                        skills: "driving",
-                        availability: "weekend",
-                        joinDate: "09-03-2004",
-                        onEdit: () {
-                          showDialog(
-                              context: context,
-                              builder: (context) => AddEditVolunteerDialog());
-                        }),
-                    VolunteerDetailsCard(
-                      name: "emma",
-                      age: "28",
-                      email: "rahul@gmail.com",
-                      phone: "5687899",
-                      skills: "driving",
-                      availability: "weekend",
-                      joinDate: "09-03-2004",
+                ...volunteers.map((volunteer) => VolunteerDetailsCard(
+                      name: volunteer['name']!,
+                      age: volunteer['age']!,
+                      email: volunteer['email']!,
+                      phone: volunteer['phone']!,
+                      skills: volunteer['skills']!,
+                      availability: volunteer['availability']!,
+                      joinDate: volunteer['joinDate']!,
                       onEdit: () {
                         showDialog(
                             context: context,
                             builder: (context) => AddEditVolunteerDialog(
-                                  volunteerDetail: {'name': 'emma'},
+                                  volunteerDetail: volunteer,
+                                  onSave: (updatedVolunteer) {
+                                    // Update the volunteer details
+                                    Navigator.pop(context);
+                                  },
                                 ));
                       },
-                    )
-                  ],
-                )
+                      onDelete: () {
+                        deleteVolunteer(volunteer);
+                      },
+                    )),
               ],
             ),
           ),
@@ -210,10 +206,12 @@ class VolunteerDetailsCard extends StatelessWidget {
   final String name, age, joinDate, phone, email, availability, skills;
 
   final Function() onEdit;
+  final Function() onDelete;
   const VolunteerDetailsCard({
     super.key,
     required this.name,
     required this.onEdit,
+    required this.onDelete,
     required this.age,
     required this.joinDate,
     required this.phone,
@@ -279,42 +277,14 @@ class VolunteerDetailsCard extends StatelessWidget {
                   SizedBox(
                     height: 5,
                   ),
-                  Text('skills:'),
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(3),
-                        margin: const EdgeInsets.all(5),
-                        child: Text("Elder care"),
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 138, 162, 201),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(3),
-                        margin: const EdgeInsets.all(5),
-                        child: Text("First Aid"),
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 138, 162, 201),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                      Container(
-                        padding: const EdgeInsets.all(3),
-                        margin: const EdgeInsets.all(5),
-                        child: Text("Event Planning"),
-                        decoration: BoxDecoration(
-                            color: const Color.fromARGB(255, 138, 162, 201),
-                            borderRadius: BorderRadius.circular(10)),
-                      ),
-                    ],
-                  )
+                  Text('skills: $skills'),
                 ],
               ),
               Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   IconButton(onPressed: onEdit, icon: Icon(Icons.edit)),
-                  IconButton(onPressed: () {}, icon: Icon(Icons.delete)),
+                  IconButton(onPressed: onDelete, icon: Icon(Icons.delete)),
                 ],
               )
             ],

@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hybridorpho_admin/common_widget/custom_alert_dialog.dart';
 
 class AddEditVolunteerDialog extends StatefulWidget {
-  final Map<String, dynamic>? volunteerDetail;
-  const AddEditVolunteerDialog({
-    super.key,
-    this.volunteerDetail,
-  });
+  final Map<String, String>? volunteerDetail;
+  final Function(Map<String, String>)? onSave;
+
+  const AddEditVolunteerDialog({super.key, this.volunteerDetail, this.onSave});
 
   @override
   State<AddEditVolunteerDialog> createState() => _AddEditVolunteerDialogState();
@@ -16,196 +16,83 @@ class _AddEditVolunteerDialogState extends State<AddEditVolunteerDialog> {
   final TextEditingController _nameController = TextEditingController();
   final TextEditingController _ageController = TextEditingController();
   final TextEditingController _phoneController = TextEditingController();
-  String _gender = 'Male';
   final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _skillsController = TextEditingController();
   final TextEditingController _availabilityController = TextEditingController();
-  final TextEditingController _skillController = TextEditingController();
-  final GlobalKey<FormState> _formkey = GlobalKey<FormState>();
+  final TextEditingController _joinDateController = TextEditingController();
 
   @override
   void initState() {
     if (widget.volunteerDetail != null) {
-      _nameController.text = widget.volunteerDetail!['name'];
-      _ageController.text = widget.volunteerDetail!['age'];
-      _phoneController.text = widget.volunteerDetail!['phone'];
-      _emailController.text = widget.volunteerDetail!['email'];
-      _availabilityController.text = widget.volunteerDetail!['availability'];
-      _skillController.text = widget.volunteerDetail!['skill'];
-      _ageController.text = widget.volunteerDetail!['age'];
+      _nameController.text = widget.volunteerDetail!['name']!;
+      _ageController.text = widget.volunteerDetail!['age']!;
+      _phoneController.text = widget.volunteerDetail!['phone']!;
+      _emailController.text = widget.volunteerDetail!['email']!;
+      _skillsController.text = widget.volunteerDetail!['skills']!;
+      _availabilityController.text = widget.volunteerDetail!['availability']!;
+      _joinDateController.text = widget.volunteerDetail!['joinDate']!;
     }
     super.initState();
   }
 
   @override
   Widget build(BuildContext context) {
-    return Dialog(
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(0)),
-      child: SizedBox(
-        width: 400,
-        child: Padding(
-          padding: const EdgeInsets.all(15.0),
-          child: Form(
-            autovalidateMode: AutovalidateMode.onUserInteraction,
-            key: _formkey,
-            child: ListView(
-              shrinkWrap: true,
-              children: [
-                Padding(
-                  padding: const EdgeInsets.all(25.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      const Text(
-                        "Edit volunteers",
-                        style: TextStyle(
-                            fontSize: 24, fontWeight: FontWeight.w700),
-                      ),
-                      IconButton(
-                        icon: Icon(Icons.close),
-                        onPressed: () {
-                          Navigator.pop(context);
-                        },
-                      )
-                    ],
-                  ),
-                ),
-                Divider(
-                  thickness: 3,
-                  color: Colors.black,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text(
-                  "Name",
-                  style: TextStyle(fontSize: 15, fontWeight: FontWeight.w300),
-                ),
-                TextFormField(
-                  validator: (value) {
-                    if (value == null) {
-                      return 'null';
-                    } else if (value.trim().isEmpty) {
-                      return 'enter something';
-                    }
-                    return null;
-                  },
-                  controller: _nameController,
-                  textCapitalization: TextCapitalization.words,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Age"),
-                TextFormField(
-                  controller: _ageController,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(
-                        "[0-9]",
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Phone"),
-                TextFormField(
-                  controller: _phoneController,
-                  inputFormatters: [
-                    FilteringTextInputFormatter.allow(
-                      RegExp(
-                        "[0-9]",
-                      ),
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Gender"),
-                DropdownButton(
-                    isExpanded: true,
-                    value: _gender,
-                    items: [
-                      DropdownMenuItem(
-                        child: Text("Male"),
-                        value: "Male",
-                      ),
-                      DropdownMenuItem(
-                        child: Text("female"),
-                        value: "Female",
-                      ),
-                    ],
-                    onChanged: (val) {
-                      _gender = val!;
-                      setState(() {});
-                    }),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("Email"),
-                TextFormField(
-                  controller: _emailController,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("availability"),
-                TextFormField(
-                  controller: _availabilityController,
-                ),
-                SizedBox(
-                  height: 10,
-                ),
-                Text("skills"),
-                TextField(
-                  controller: _skillController,
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(15.0),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.end,
-                    children: [
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.grey,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(3))),
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          child: Text("cancel",
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  color: Colors.white))),
-                      SizedBox(
-                        width: 20,
-                      ),
-                      ElevatedButton(
-                          style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.blue,
-                              shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(3))),
-                          onPressed: () {
-                            if (_formkey.currentState!.validate()) {
-                              Navigator.pop(context);
-                            }
-                          },
-                          child: Text(
-                            "Save changes",
-                            style: TextStyle(
-                                fontWeight: FontWeight.w500,
-                                color: Colors.white),
-                          ))
-                    ],
-                  ),
-                )
-              ],
+    return CustomAlertDialog(
+      title:
+          widget.volunteerDetail == null ? 'Add Volunteer' : 'Edit Volunteer',
+      content: SingleChildScrollView(
+        child: Column(
+          spacing: 10,
+          children: [
+            TextField(
+              controller: _nameController,
+              decoration: InputDecoration(labelText: 'Name'),
             ),
-          ),
+            TextField(
+              controller: _ageController,
+              decoration: InputDecoration(labelText: 'Age'),
+              keyboardType: TextInputType.number,
+            ),
+            TextField(
+              controller: _phoneController,
+              decoration: InputDecoration(labelText: 'Phone'),
+              keyboardType: TextInputType.phone,
+            ),
+            TextField(
+              controller: _emailController,
+              decoration: InputDecoration(labelText: 'Email'),
+              keyboardType: TextInputType.emailAddress,
+            ),
+            TextField(
+              controller: _skillsController,
+              decoration: InputDecoration(labelText: 'Skills'),
+            ),
+            TextField(
+              controller: _availabilityController,
+              decoration: InputDecoration(labelText: 'Availability'),
+            ),
+            TextField(
+              controller: _joinDateController,
+              decoration: InputDecoration(labelText: 'Join Date'),
+              keyboardType: TextInputType.datetime,
+            ),
+          ],
         ),
       ),
+      primaryButton: 'save',
+      onPrimaryPressed: () {
+        if (widget.onSave != null) {
+          widget.onSave!({
+            'name': _nameController.text,
+            'age': _ageController.text,
+            'phone': _phoneController.text,
+            'email': _emailController.text,
+            'skills': _skillsController.text,
+            'availability': _availabilityController.text,
+            'joinDate': _joinDateController.text,
+          });
+        }
+      },
     );
   }
 }
